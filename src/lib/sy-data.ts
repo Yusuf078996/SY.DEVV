@@ -474,7 +474,7 @@ export const journey = [
 ];
 
 export const contact = {
-  whatsapp: { label: "+63 878-9844-8012", href: "https://wa.me/6387898448012" },
+  whatsapp: { label: "+62 878-9844-8012", href: "https://wa.me/6287898448012" },
   phone: { label: "07016466056", href: "tel:07016466056" },
   email: { label: "yusufsul123000@gmail.com", href: "mailto:yusufsul123000@gmail.com" },
   github: { label: "github.com/Yusuf078996", href: "https://github.com/Yusuf078996" },

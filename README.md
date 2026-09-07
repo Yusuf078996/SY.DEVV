@@ -667,7 +667,7 @@ Contact information:
 
 ### WHATSAPP
 
-+63 878-9844-8012
++62 878-9844-8012
 
 ### PHONE
 
