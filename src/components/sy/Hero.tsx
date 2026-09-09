@@ -101,10 +101,30 @@ export function Hero() {
             <span className="mono-label text-accent">AVAILABLE FOR SELECTED PROJECTS</span>
           </div>
 
-          <h1 className="sr-only">
-            SY — Yusuf Suleiman
-          </h1>
-          <SYMark className="h-auto w-[min(68vw,25rem)] drop-shadow-[0_0_40px_rgba(57,255,136,0.08)] sm:w-[min(48vw,31rem)]" />
+          <h1 className="sr-only">SY — Yusuf Suleiman</h1>
+          <div
+            aria-label="SY logo"
+            className="sy-logo-stage h-auto w-[min(68vw,25rem)] sm:w-[min(48vw,31rem)]"
+            role="img"
+          >
+            <div className="sy-logo-float">
+              <div className="sy-logo-3d">
+                <span className="sy-logo-depth sy-logo-depth-1" aria-hidden="true">
+                  <SYMark />
+                </span>
+                <span className="sy-logo-depth sy-logo-depth-2" aria-hidden="true">
+                  <SYMark />
+                </span>
+                <span className="sy-logo-depth sy-logo-depth-3" aria-hidden="true">
+                  <SYMark />
+                </span>
+                <span className="sy-logo-face">
+                  <SYMark />
+                </span>
+                <span className="sy-logo-sheen" aria-hidden="true" />
+              </div>
+            </div>
+          </div>
 
           <p className="mono-label mt-6 text-foreground">Software Engineer · Creative Developer</p>
 

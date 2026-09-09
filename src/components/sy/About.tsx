@@ -1,4 +1,5 @@
 import { Reveal, SectionHead } from "./primitives";
+import portrait from "../../../yuuuff.jpeg";
 
 const meta = [
   { k: "NAME", v: "Yusuf Suleiman" },
@@ -9,7 +10,11 @@ const meta = [
 
 export function About() {
   return (
-    <section id="about" aria-labelledby="about-title" className="mx-auto max-w-[1400px] px-5 py-28 sm:px-8 md:py-40">
+    <section
+      id="about"
+      aria-labelledby="about-title"
+      className="mx-auto max-w-[1400px] px-5 py-28 sm:px-8 md:py-40"
+    >
       <SectionHead
         id="about-title"
         label="02 / ABOUT"
@@ -19,10 +24,22 @@ export function About() {
 
       <div className="grid gap-16 lg:grid-cols-[1.1fr_0.9fr] lg:gap-24">
         <Reveal>
-          <blockquote className="text-3xl font-medium leading-[1.15] sm:text-4xl md:text-5xl">
-            I enjoy taking an idea that exists only in someone&apos;s head and turning it into
-            something people can <span className="text-accent">actually interact with</span>.
-          </blockquote>
+          <div className="space-y-12">
+            <figure className="about-portrait max-w-sm">
+              <div className="about-portrait-frame">
+                <img src={portrait} alt="Yusuf Suleiman" className="h-full w-full object-contain" />
+              </div>
+              <figcaption className="mono-label mt-4 flex items-center justify-between">
+                <span>YUSUF SULEIMAN</span>
+                <span className="text-accent">01 / 01</span>
+              </figcaption>
+            </figure>
+
+            <blockquote className="text-3xl font-medium leading-[1.15] sm:text-4xl md:text-5xl">
+              I enjoy taking an idea that exists only in someone&apos;s head and turning it into
+              something people can <span className="text-accent">actually interact with</span>.
+            </blockquote>
+          </div>
         </Reveal>
 
         <div className="space-y-10">
