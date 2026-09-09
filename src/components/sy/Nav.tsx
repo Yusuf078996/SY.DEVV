@@ -1,4 +1,4 @@
-import { useEffect, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import { SYMark } from "./primitives";
 
 const items = [
@@ -12,6 +12,8 @@ const items = [
 export function Nav() {
   const [compact, setCompact] = useState(false);
   const [open, setOpen] = useState(false);
+  const scrollPosition = useRef(0);
+  const restoreScroll = useRef(true);
 
   useEffect(() => {
     const onScroll = () => setCompact(window.scrollY > 40);
@@ -21,63 +23,80 @@ export function Nav() {
   }, []);
 
   useEffect(() => {
-    document.documentElement.style.overflow = open ? "hidden" : "";
+    if (!open) return;
+
+    scrollPosition.current = window.scrollY;
+    restoreScroll.current = true;
+    const htmlOverflow = document.documentElement.style.overflow;
+    const bodyOverflow = document.body.style.overflow;
+    document.documentElement.style.overflow = "hidden";
+    document.body.style.overflow = "hidden";
+
     return () => {
-      document.documentElement.style.overflow = "";
+      document.documentElement.style.overflow = htmlOverflow;
+      document.body.style.overflow = bodyOverflow;
+      if (restoreScroll.current) window.scrollTo(0, scrollPosition.current);
     };
   }, [open]);
 
+  const closeAfterNavigation = () => {
+    restoreScroll.current = false;
+    setOpen(false);
+  };
+
   return (
-    <header
-      className={`fixed inset-x-0 top-0 z-[70] transition-all duration-500 ${
-        compact
-          ? "border-b border-line bg-background/72 py-3 backdrop-blur-xl"
-          : "border-b border-transparent py-6"
-      }`}
-    >
-      <nav className="mx-auto flex max-w-[1400px] items-center justify-between px-5 sm:px-8">
-        <a href="#top" aria-label="SY home" className="flex items-center gap-3 text-foreground">
-          <SYMark className={compact ? "h-8 w-10" : "h-10 w-12"} />
-        </a>
+    <>
+      <header
+        className={`fixed inset-x-0 top-0 z-[110] transition-all duration-500 ${
+          compact
+            ? "border-b border-line bg-background/72 py-3 backdrop-blur-xl"
+            : "border-b border-transparent py-6"
+        }`}
+      >
+        <nav className="mx-auto flex max-w-[1400px] items-center justify-between px-5 sm:px-8">
+          <a href="#top" aria-label="SY home" className="flex items-center gap-3 text-foreground">
+            <SYMark className={compact ? "h-8 w-10" : "h-10 w-12"} />
+          </a>
 
-        <ul className="hidden items-center gap-9 md:flex">
-          {items.map((i) => (
-            <li key={i.href}>
-              <a
-                href={i.href}
-                data-cursor="link"
-                className="mono-label link-underline transition-colors hover:text-foreground"
-              >
-                {i.label}
-              </a>
+          <ul className="hidden items-center gap-9 md:flex">
+            {items.map((i) => (
+              <li key={i.href}>
+                <a
+                  href={i.href}
+                  data-cursor="link"
+                  className="mono-label link-underline transition-colors hover:text-foreground"
+                >
+                  {i.label}
+                </a>
+              </li>
+            ))}
+            <li className="flex items-center gap-2 border-l border-line pl-6">
+              <span className="status-dot" />
+              <span className="mono-label">AVAILABLE</span>
             </li>
-          ))}
-          <li className="flex items-center gap-2 border-l border-line pl-6">
-            <span className="status-dot" />
-            <span className="mono-label">AVAILABLE</span>
-          </li>
-        </ul>
+          </ul>
 
-        <button
-          onClick={() => setOpen((v) => !v)}
-          aria-expanded={open}
-          aria-label={open ? "Close menu" : "Open menu"}
-          className="relative z-[80] flex h-9 items-center gap-2 border border-line px-3 md:hidden"
-        >
-          <span className="mono-label text-foreground">{open ? "CLOSE" : "MENU"}</span>
-          <span className="flex flex-col gap-[3px]">
-            <span
-              className={`h-px w-4 bg-accent transition-transform duration-300 ${open ? "translate-y-[2px] rotate-45" : ""}`}
-            />
-            <span
-              className={`h-px w-4 bg-accent transition-transform duration-300 ${open ? "-translate-y-[2px] -rotate-45" : ""}`}
-            />
-          </span>
-        </button>
-      </nav>
+          <button
+            onClick={() => setOpen((v) => !v)}
+            aria-expanded={open}
+            aria-label={open ? "Close menu" : "Open menu"}
+            className="relative z-[110] flex h-9 items-center gap-2 border border-line px-3 md:hidden"
+          >
+            <span className="mono-label text-foreground">{open ? "CLOSE" : "MENU"}</span>
+            <span className="flex flex-col gap-[3px]">
+              <span
+                className={`h-px w-4 bg-accent transition-transform duration-300 ${open ? "translate-y-[2px] rotate-45" : ""}`}
+              />
+              <span
+                className={`h-px w-4 bg-accent transition-transform duration-300 ${open ? "-translate-y-[2px] -rotate-45" : ""}`}
+              />
+            </span>
+          </button>
+        </nav>
+      </header>
 
       <div
-        className={`fixed inset-0 z-[60] overflow-y-auto bg-background transition-[opacity,transform] duration-500 md:hidden ${
+        className={`fixed inset-0 z-[100] overflow-y-auto bg-background transition-[opacity,transform] duration-500 md:hidden ${
           open ? "pointer-events-auto opacity-100" : "pointer-events-none -translate-y-3 opacity-0"
         }`}
       >
@@ -87,7 +106,7 @@ export function Nav() {
             <li key={i.href} className="w-full border-b border-line">
               <a
                 href={i.href}
-                onClick={() => setOpen(false)}
+                onClick={closeAfterNavigation}
                 className="grid w-full grid-cols-[minmax(0,1fr)_3rem] items-baseline gap-4 py-5"
               >
                 <span className="text-4xl font-medium tracking-tight">{i.label}</span>
@@ -101,6 +120,6 @@ export function Nav() {
           </li>
         </ul>
       </div>
-    </header>
+    </>
   );
 }
