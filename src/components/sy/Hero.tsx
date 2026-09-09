@@ -104,7 +104,7 @@ export function Hero() {
           <h1 className="sr-only">SY — Yusuf Suleiman</h1>
           <div
             aria-label="SY logo"
-            className="sy-logo-stage h-auto w-[min(68vw,25rem)] sm:w-[min(48vw,31rem)]"
+            className="sy-logo-stage h-auto w-[min(84vw,30rem)] sm:w-[min(58vw,37rem)]"
             role="img"
           >
             <div className="sy-logo-float">
