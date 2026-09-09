@@ -29,7 +29,7 @@ export function Nav() {
 
   return (
     <header
-      className={`fixed inset-x-0 top-0 z-50 transition-all duration-500 ${
+      className={`fixed inset-x-0 top-0 z-[70] transition-all duration-500 ${
         compact
           ? "border-b border-line bg-background/72 py-3 backdrop-blur-xl"
           : "border-b border-transparent py-6"
@@ -62,7 +62,7 @@ export function Nav() {
           onClick={() => setOpen((v) => !v)}
           aria-expanded={open}
           aria-label={open ? "Close menu" : "Open menu"}
-          className="relative z-50 flex h-9 items-center gap-2 border border-line px-3 md:hidden"
+          className="relative z-[80] flex h-9 items-center gap-2 border border-line px-3 md:hidden"
         >
           <span className="mono-label text-foreground">{open ? "CLOSE" : "MENU"}</span>
           <span className="flex flex-col gap-[3px]">
@@ -77,21 +77,21 @@ export function Nav() {
       </nav>
 
       <div
-        className={`fixed inset-0 z-40 bg-background transition-[opacity,transform] duration-500 md:hidden ${
+        className={`fixed inset-0 z-[60] overflow-y-auto bg-background transition-[opacity,transform] duration-500 md:hidden ${
           open ? "pointer-events-auto opacity-100" : "pointer-events-none -translate-y-3 opacity-0"
         }`}
       >
         <div className="grid-lines absolute inset-0 opacity-40" />
-        <ul className="relative flex h-full flex-col justify-center gap-2 px-6">
+        <ul className="relative flex min-h-full flex-col justify-start px-6 pb-10 pt-28 sm:px-10 sm:pt-32">
           {items.map((i, idx) => (
-            <li key={i.href} className="border-b border-line">
+            <li key={i.href} className="w-full border-b border-line">
               <a
                 href={i.href}
                 onClick={() => setOpen(false)}
-                className="flex items-baseline justify-between py-5"
+                className="grid w-full grid-cols-[minmax(0,1fr)_3rem] items-baseline gap-4 py-5"
               >
                 <span className="text-4xl font-medium tracking-tight">{i.label}</span>
-                <span className="mono-label">0{idx + 1}</span>
+                <span className="mono-label text-right">0{idx + 1}</span>
               </a>
             </li>
           ))}
